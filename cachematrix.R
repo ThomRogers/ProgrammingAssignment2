@@ -5,6 +5,11 @@
 ## returns a list object of 4 'methods' to access the initial matrix and its inverse
 ## value
 
+####  Many thanks to Bill Hilton via Pavel Kirjanas in thread at 
+####  https://class.coursera.org/rprog-016/forum/thread?thread_id=96 
+####  for clarifying the logic for this assignment.  My line-by-line comments rely heavily  
+####  his commented code from that thread
+
 makeCacheMatrix <- function(x = matrix()) {  # input will be an invertible matrix  
     mtx_inv <- NULL                          # the inverted matrix supplied as 'x' above, initializes as NULL
     
