@@ -2,17 +2,22 @@
 ##
 ## Takes an invertible square matrix, sets and caches value of its inverse.  Initializes 
 ## inverse value to NULL, until value is calculated via the setinv method
-## returns a list object of '3 methods' to access the initial matrix and its inverse
+## returns a list object of 4 'methods' to access the initial matrix and its inverse
 ## value
 
 makeCacheMatrix <- function(x = matrix()) {  # input will be an invertible matrix  
     mtx_inv <- NULL                          # the inverted matrix supplied as 'x' above, initializes as NULL
     
+    set <- function(new_mtrx) {        # "replace method" - can be used to update object previously created 
+        x <<- new_mtrx                 #                    by call to makeCacheMatrix, by replacing original                   
+        mtx_inv <<- NULL               #                    (or default) matrix with new matrix
+    }
+    
     get <- function() { x }            # returns value of the originally supplied matrix
     setinv <- function(invert) {       # "set method" - called by cacheSolve() during initial cacheSolve() call
-        mtx_inv <<- invert }           #                and stores value using superassignment ("<<-" operator)
+        mtx_inv <<- invert }           #                and caches value using superassignment ("<<-" operator)
     getinv <- function() { mtx_inv }   # "get method" - returns value of mtx_inv when called
-    list(get = get,                    #  the list object returned by this function to the calling function/code
+    list(set = set, get = get,         #  the list object returned by this function to the calling function/code
          setinv = setinv,
          getinv = getinv)
 }
@@ -22,7 +27,6 @@ makeCacheMatrix <- function(x = matrix()) {  # input will be an invertible matri
 ##
 ## Uses object created by makeCacheMatrix and calculates its inverse (if inverse not previously calculated)
 ## or retrieves cached inverse
-
 
 cacheSolve <- function(mCM_obj, ...) { # mCM_obj is list object created by a previous call to makeCacheMatrix
     invtd_mtx <- mCM_obj$getinv()      # gets the value of the inverted matrix as stored by makeCacheMatrix
